@@ -1,0 +1,41 @@
+{#include main.html}
+{#title}Todos{/title}
+
+<section class="vh-100 gradient-custom">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-xl-10">
+
+        <div class="card">
+          <div class="card-body p-5">
+          <form hx-post="{uri:Todos.add()}" hx-target="#todo-list" class="d-flex justify-content-center align-items-center mb-4">
+            <div data-mdb-input-init class="form-outline flex-fill">
+              <input name="task" type="text" id="form2" class="form-control" placeholder="Enter new task" />
+            </div>
+            <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-info ms-2">Add</button>
+          </form>
+
+            <!-- Tabs content -->
+            <div class="tab-content" id="ex1-content">
+              <div class="tab-pane fade show active" role="tabpanel"
+                   aria-labelledby="ex1-tab-1" id="todo-list">
+                {#fragment id="list"}
+                  <ul class="list-group mb-0">
+                    {! Iterate over our todo items !}
+                    {#for todo in todos}
+                    <li class="todo list-group-item d-flex align-items-center border-0 mb-2 rounded{#if todo.completed} completed{/if}"
+                        style="background-color: #f4f6f7;">
+                      <input hx-put="{uri:Todos.done(todo.id)}" hx-target="#todo-list" class="form-check-input me-2" type="checkbox" value="" aria-label="..." {#if todo.completed}checked{/if} />
+                      {todo.task.capitalise}
+                    </li>
+                    {/for}
+                  </ul>
+                {/fragment}
+              </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
